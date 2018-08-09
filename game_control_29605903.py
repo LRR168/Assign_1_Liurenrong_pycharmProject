@@ -13,20 +13,17 @@ from battle_units_29605903 import *
 
 class Gamer:
 
-    def __init__(self,units_list=[],money=10,gamer_name="Player"):
-        self.units_list = units_list
+    def __init__(self,money=10,gamer_name="Player"):
+        self.units_list = []
         self.money = money
         self.current_result = None
         self.current_unit = None
         self.gamer_name = gamer_name
 
-        if self.has_units_survive():
-            self.current_unit = units_list[0]
-
 
     def purchase_unit(self,unit_code):
         """
-        :param unitCode: decide which unit to buy
+        :param unit_code: decide which unit to buy
         :return: True = purchase the unit successfully.
         """
         unit = BasicBattleUnit(unit_code=unit_code)
@@ -43,7 +40,7 @@ class Gamer:
             return
 
         self.units_list.pop(0)
-        self.current_unit = self.units_list[0]
+        self.current_unit = self.units_list[0] if self.has_units_survive() else None
         self.current_result = RESULT_LOSE
 
     def win(self):
@@ -55,7 +52,7 @@ class Gamer:
             return
 
         self.units_list.pop(0)
-        self.current_unit = self.units_list[0]
+        self.current_unit = self.units_list[0] if self.has_units_survive() else None
         self.current_result = RESULT_TIE
 
     def has_units_survive(self):

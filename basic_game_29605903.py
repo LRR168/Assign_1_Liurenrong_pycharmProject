@@ -29,21 +29,22 @@ def gamers_combat(gamer1: Gamer, gamer2: Gamer):
     while(gamer1.has_units_survive() and gamer2.has_units_survive()):
         result = gamer1.current_unit.get_result_of_combating(gamer2.current_unit)
         if result == RESULT_LOSE:
-            gamer1.lose()
-            gamer2.win()
             print("{0} {1} VS {2} {3}".format(gamer1.gamer_name,gamer1.current_unit,gamer2.gamer_name,gamer2.current_unit))
             print("{0} won this round!".format(gamer2.gamer_name))
+            gamer1.lose()
+            gamer2.win()
 
         elif result == RESULT_WIN:
-            gamer1.win()
-            gamer2.lose()
             print("{0} {1} VS {2} {3}".format(gamer1.gamer_name, gamer1.current_unit, gamer2.gamer_name, gamer2.current_unit))
             print("{0} won this round!".format(gamer1.gamer_name))
+            gamer1.win()
+            gamer2.lose()
+
         elif result == RESULT_TIE:
-            gamer1.tie()
-            gamer2.tie()
             print("{0} {1} VS {2} {3}".format(gamer1.gamer_name, gamer1.current_unit, gamer2.gamer_name, gamer2.current_unit))
             print("{0} and {1} tied this round!".format(gamer1.gamer_name,gamer2.gamer_name))
+            gamer1.tie()
+            gamer2.tie()
 
         # press enter to continued next round
         prompt_to_continued("If you want to continued next round, please press y\n", "y")
@@ -55,9 +56,9 @@ def gamers_combat(gamer1: Gamer, gamer2: Gamer):
         if(not gamer2.has_units_survive()):
             print("{0} {1} tied this game!".format(gamer1.gamer_name,gamer2.gamer_name))
         else:
-            print("{0} won this round!".format(gamer2.gamer_name))
+            print("{0} won this game!".format(gamer2.gamer_name))
     else:
-        print("{0} won this round!".format(gamer1.gamer_name))
+        print("{0} won this game!".format(gamer1.gamer_name))
 
 
 
@@ -93,13 +94,14 @@ if __name__ == "__main__":
 
 
     """Generate a computer opponent"""
-    listToPurchase = random_int_list(UNIT_ARCHER,UNIT_KNIGHT,max_round_num)
+    list_to_purchase = random_int_list(UNIT_ARCHER,UNIT_KNIGHT,max_round_num)
     computer_gamer = Gamer(money=initial_money,gamer_name="computer_gamer")
-    for code in listToPurchase:
+    for code in list_to_purchase:
         computer_gamer.purchase_unit(code)
     print("\nA computer opponent generated.")
+    print(computer_gamer)
     prompt_to_continued("If you want to start the game, please press y.\n", "y")
 
-
+    # start controlling game according to the rules
     gamers_combat(gamer,computer_gamer)
 

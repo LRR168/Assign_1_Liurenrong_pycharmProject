@@ -52,7 +52,7 @@ class BasicBattleUnit:
 
         if self.unit_code * enemy_unit.unit_code == 3:
             # Special case: one unit is ARCHER and another one is KNIGHT.
-            if self.unitCode < enemy_unit.unit_code:
+            if self.unit_code < enemy_unit.unit_code:
                 # self = ARCHER and enemy = KNIGHT
                 return RESULT_LOSE
             else:
