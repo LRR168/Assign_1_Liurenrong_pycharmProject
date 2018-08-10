@@ -26,39 +26,42 @@ def prompt_to_continued(prompt,key):
 
 """control game flow"""
 def gamers_combat(gamer1: Gamer, gamer2: Gamer):
+    round_count = 1
     while(gamer1.has_units_survive() and gamer2.has_units_survive()):
         result = gamer1.current_unit.get_result_of_combating(gamer2.current_unit)
         if result == RESULT_LOSE:
-            print("{0} {1} VS {2} {3}".format(gamer1.gamer_name,gamer1.current_unit,gamer2.gamer_name,gamer2.current_unit))
+            print("ROUND{4}: {0} 【{1}】 VS {2} 【{3}】".format(gamer1.gamer_name,gamer1.current_unit,gamer2.gamer_name,gamer2.current_unit,round_count))
             print("{0} won this round!".format(gamer2.gamer_name))
             gamer1.lose()
             gamer2.win()
 
         elif result == RESULT_WIN:
-            print("{0} {1} VS {2} {3}".format(gamer1.gamer_name, gamer1.current_unit, gamer2.gamer_name, gamer2.current_unit))
+            print("ROUND{4}: {0} 【{1}】VS {2} 【{3}】".format(gamer1.gamer_name, gamer1.current_unit, gamer2.gamer_name, gamer2.current_unit,round_count))
             print("{0} won this round!".format(gamer1.gamer_name))
             gamer1.win()
             gamer2.lose()
 
         elif result == RESULT_TIE:
-            print("{0} {1} VS {2} {3}".format(gamer1.gamer_name, gamer1.current_unit, gamer2.gamer_name, gamer2.current_unit))
+            print("ROUND{4}: {0} 【{1}】VS {2} 【{3}】".format(gamer1.gamer_name, gamer1.current_unit, gamer2.gamer_name, gamer2.current_unit,round_count))
             print("{0} and {1} tied this round!".format(gamer1.gamer_name,gamer2.gamer_name))
             gamer1.tie()
             gamer2.tie()
 
+        round_count += 1
         # press enter to continued next round
-        prompt_to_continued("If you want to continued next round, please press y\n", "y")
+        # prompt_to_continued("If you want to continued next round, please press y\n", "y")
 
 
     # There is at least one gamer lost all units
-    print("Game end!")
+    print("\n\nGame end!")
+    print("Final result:")
     if(not gamer1.has_units_survive()):
         if(not gamer2.has_units_survive()):
-            print("{0} {1} tied this game!".format(gamer1.gamer_name,gamer2.gamer_name))
+            print("********{0} {1} tied this game!********".format(gamer1.gamer_name,gamer2.gamer_name))
         else:
-            print("{0} won this game!".format(gamer2.gamer_name))
+            print("********{0} won this game!********".format(gamer2.gamer_name))
     else:
-        print("{0} won this game!".format(gamer1.gamer_name))
+        print("********{0} won this game!********".format(gamer1.gamer_name))
 
 
 
