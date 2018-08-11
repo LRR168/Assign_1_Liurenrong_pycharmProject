@@ -13,21 +13,35 @@ from game_control_29605903 import *
 def purchase_process_task1(gamer):
     """ instruct user to purchase units by controlling the gamer object"""
     flag_exit = True
+    has_one = False
     for i in range(max_round_num):
         while flag_exit:
+            """
+                please purchase an unit allocated in the poisition 1:
+                1 = ARCHER($1)
+                2 = SOLDIER($1) 
+                3 = KNIGHT($1) 
+                4 = exit
+                lrr: $10 left.
+            """
+            money_left_str = ("{}: ${} left.\n".format(gamer.gamer_name, gamer.money)) if not has_one else ""
             unit_code = input(
                 "\nplease purchase an unit allocated in the poisition {0}:\n{1} = ARCHER($1)"
                 "\n{2} = SOLDIER($1) \n{3} = KNIGHT($1) \n{4} = exit\n"
-                    .format(i + 1, UNIT_ARCHER, UNIT_SOLDIER, UNIT_KNIGHT, UNIT_KNIGHT+1))
+                    .format(i + 1, UNIT_ARCHER, UNIT_SOLDIER, UNIT_KNIGHT, UNIT_KNIGHT+1) + money_left_str)
 
             if unit_code in code_list:
+                has_one = True
                 # control gamer instance to purchase ans store units in a list.
                 gamer.purchase_unit(int(unit_code))
                 print(gamer)
                 break
             elif unit_code == str(UNIT_KNIGHT + 1):
                 # exit
-                flag_exit = False
+                if has_one:
+                    flag_exit = False
+                else:
+                    print("Not buy anything yet!")
             else:
                 print("\nThe unit code does not exist!\n")
 
