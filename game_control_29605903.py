@@ -85,7 +85,7 @@ class Gamer:
         if self.has_units_survive():
             return self.units_string()
         else:
-            return "No unit has been purchased yet!"
+            return "No unit has been purchased yet!\n"
 
     def units_string(self):
         """

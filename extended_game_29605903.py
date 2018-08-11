@@ -11,14 +11,26 @@ from game_control_29605903 import *
 def purchase_process_task2(gamer):
     """ Instruct user to purchase units by controlling the gamer object"""
     flag_exit = True
+    has_one = False
     for i in range(max_round_num):
         while flag_exit:
+            """
+                please purchase an unit allocated in the poisition 1:
+                1 = ARCHER($1)
+                2 = SOLDIER($1.75) 
+                3 = KNIGHT($2.5) 
+                4 = exit
+                lrr: $10 left
+            """
+            money_left_str = ("{}: ${} left.\n".format(gamer.gamer_name, gamer.money)) if not has_one else ""
             unit_code = input(
                 "\nplease purchase an unit allocated in the poisition {0}:\n{1} = ARCHER($1)"
                 "\n{2} = SOLDIER($1.75) \n{3} = KNIGHT($2.5) \n{4} = exit\n"
-                    .format(i + 1, UNIT_ARCHER, UNIT_SOLDIER, UNIT_KNIGHT, UNIT_KNIGHT+1))
+                    .format(i + 1, UNIT_ARCHER, UNIT_SOLDIER, UNIT_KNIGHT, UNIT_KNIGHT+1)
+                + money_left_str)
 
             if unit_code in code_list:
+                has_one = True
                 done = gamer.purchase_unit(int(unit_code))
                 if not done:
                     print("Not enough money!")
@@ -27,7 +39,10 @@ def purchase_process_task2(gamer):
                 break
             elif unit_code == str(UNIT_KNIGHT + 1):
                 # exit
-                flag_exit = False
+                if has_one:
+                    flag_exit = False
+                else:
+                    print("Not buy anything yet!")
             else:
                 print("\nThe unit code does not exist!\n")
 
@@ -121,14 +136,14 @@ if __name__ == "__main__":
     code_list = [str(UNIT_ARCHER), str(UNIT_SOLDIER), str(UNIT_KNIGHT)]
 
     """ Gamer Class maintains the list of the units. """
-    gamer1_name = input("Please enter a player name.\n")
+    gamer1_name = input("Please press ENTER to enter a player name:\n")
     gamer1 = ExtendedGamer(money=initial_money, gamer_name=gamer1_name)
     purchase_process_task2(gamer1)
 
     # gamer2 relative setting
     # This is a line separating player1 and player2 information.
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    gamer2_name = input("Please enter a player2 name:\n")
+    gamer2_name = input("Please press ENTER to enter a player2 name:\n")
     gamer2 = ExtendedGamer(money=initial_money, gamer_name=gamer2_name)
     purchase_process_task2(gamer2)
 
